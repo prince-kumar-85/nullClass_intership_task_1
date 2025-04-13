@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Points Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 20px auto;
+            background-color: #000;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .profile-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Points Tracker</h1>
+        <div class="video-section">
+            <h2>Watch Videos</h2>
+
+            <!-- Video 1 -->
+            <video id="video1" controls>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="watch-video-1">Play Video 1</button>
+
+            <!-- Video 2 -->
+            <video id="video2" controls>
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="watch-video-2">Play Video 2</button>
+        </div>
+
+        <div class="profile-section">
+            <h2>Your Profile</h2>
+            <p><strong>Videos Watched:</strong> <span id="video-count">0</span></p>
+            <p><strong>Total Points:</strong> <span id="total-points">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Track watched status
+        const watchedVideos = {
+            video1: false,
+            video2: false
+        };
+
+        let videoCount = 0;
+        let totalPoints = 0;
+
+        function updateProfile() {
+            document.getElementById("video-count").textContent = videoCount;
+            document.getElementById("total-points").textContent = totalPoints;
+        }
+
+        function handleVideoWatch(videoId, points) {
+            const video = document.getElementById(videoId);
+            video.addEventListener("ended", function () {
+                if (!watchedVideos[videoId]) {
+                    watchedVideos[videoId] = true;
+                    videoCount += 1;
+                    totalPoints += points;
+                    updateProfile();
+                }
+            });
+        }
+
+        // Setup tracking for each video
+        handleVideoWatch("video1", 5);  // Video 1 = 5 points
+        handleVideoWatch("video2", 5); // Video 2 = 10 points
+
+        // Optional: Buttons play the video
+        document.getElementById("watch-video-1").addEventListener("click", function () {
+            document.getElementById("video1").play();
+        });
+
+        document.getElementById("watch-video-2").addEventListener("click", function () {
+            document.getElementById("video2").play();
+        });
+    </script>
+</body>
+</html>
